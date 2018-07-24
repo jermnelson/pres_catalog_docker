@@ -22,12 +22,9 @@ run command:
 
     `docker exec -it pres_cat \bin\bash`
 
-1.  Switch user to *postrgres* to initialize the database:
-
-    su postgres
-    psql -f /opt/preservation_catalog/db/scripts/pres_setup.sql postgres
-    psql -f /opt/preservation_catalog/db/scripts/pres_test_setup.sql postgres
+1.  Run the base script `/tmp/run_postgres.sh` initialize the database
 
 1.  Run `bundle exec rspec` to run rspec tests
 
 ## Stopping
+If the `pres_cat` container is running in the foreground, a ctrl-c, will stop and remove the container. 
