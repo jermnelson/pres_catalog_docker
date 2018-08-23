@@ -7,7 +7,7 @@ ENV REPO https://github.com/sul-dlss/preservation_catalog.git
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN apt-get update && \
-    apt-get install -y supervisor && \
+    apt-get install -y supervisor zip && \
     apt-get install -y postgresql postgresql-contrib && \
     cd /opt && wget http://download.redis.io/releases/redis-4.0.10.tar.gz && \
     tar xzf redis-4.0.10.tar.gz && \
@@ -15,13 +15,13 @@ RUN apt-get update && \
 
 RUN git clone --depth 5 $REPO $HOME && \
     cd $HOME && \
-    bundle install # This doesn't work if volume is mapped to Host's git repo
+    bundle install
 
 COPY run_postgresql.sh /tmp/run_postgresql.sh
 COPY fix-unicode.sql /tmp/fix-unicode.sql
 
 RUN chmod +x /tmp/run_postgresql.sh && \
-    cd /tmp && ls 
+    cd /tmp && ls
 
 RUN mkdir -p /var/pgsql/data && \
     chown -R postgres /var/pgsql
